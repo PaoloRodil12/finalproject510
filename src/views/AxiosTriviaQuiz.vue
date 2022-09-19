@@ -60,6 +60,10 @@
   </template>
     
     <script>
+      
+
+  import db from '@/fb'
+
   export default {
     name: "Quiz",
     // data() function stores state variables
@@ -75,6 +79,7 @@
         passingScore:"",
         pass:false,
         squiz:false,
+        
       };
     },
     computed: {
@@ -183,6 +188,13 @@
           }
           else{
             this.quizCompleted= true
+            const project = {
+              scores: this.score,
+              timestamp: new Date(),
+            }
+            db.collection('projects').add(project).then(() => {
+              console.log("Added")
+            })
             if(this.quizCompleted=true){
             this.passingScore= (0.5*this.questions.length);
             if(this.score>=this.passingScore){
@@ -205,6 +217,9 @@
       this.fetchQuestions();
     },
   };
+
+  
+  
   </script>
     
     <style scoped>
@@ -233,7 +248,7 @@
   #quizfailed{
     font-size: 1.7rem;
     padding: 0.5rem;
-    color: #ff6161;
+    color: #fc0000;
     text-align: center;
     border: 1px;
   }
