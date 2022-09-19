@@ -55,7 +55,7 @@
             </v-card>
         </v-col>
     </v-row>
-    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   </body>
   </template>
     
@@ -96,7 +96,7 @@
       async fetchQuestions() {
         this.loading = true;
         let response = await fetch(
-          "https://opentdb.com/api.php?amount=15&category=32&difficulty=easy&type=multiple"
+          "https://opentdb.com/api.php?amount=10&category=32&difficulty=easy&type=multiple"
         );
         let jsonResponse = await response.json();
         let index = 0; // index is used to identify single answer
