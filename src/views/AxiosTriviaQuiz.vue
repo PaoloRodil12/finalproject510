@@ -93,6 +93,16 @@
 
     // Custom methods of the Vue Component
     methods: {
+
+      async fetchScore() {
+        const querySnapshot = await getDocs(collection(db, "quiz"));
+      querySnapshot.forEach((doc) => {
+        //console.log(doc.data())
+        this.quizData.push(doc.data()),orderBy('score');
+        console.log(doc.data(orderBy('score')));
+      });
+      },
+
       async fetchQuestions() {
         this.loading = true;
         let response = await fetch(
@@ -187,14 +197,7 @@
             this.questionCurrentNumber++;
           }
           else{
-            this.quizCompleted= true
-            const project = {
-              scores: this.score,
-              timestamp: new Date(),
-            }
-            db.collection('projects').add(project).then(() => {
-              console.log("Added")
-            })
+            
             if(this.quizCompleted=true){
             this.passingScore= (0.5*this.questions.length);
             if(this.score>=this.passingScore){
@@ -204,6 +207,15 @@
             else{
               this.result= "Failed"              
             }
+            this.quizCompleted= true
+            const project = {
+              scores: this.score,
+              timestamp: new Date(),
+              remarks: this.result,
+            }
+            db.collection('projects').add(project).then(() => {
+              console.log("Added")
+            })
           }
           }
             
@@ -215,6 +227,7 @@
     // Code inside mounted() runs after the Component has mounted
     mounted() {
       this.fetchQuestions();
+      this.fetchScore();
     },
   };
 

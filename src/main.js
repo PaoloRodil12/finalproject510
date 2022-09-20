@@ -8,8 +8,6 @@ import { loadFonts } from './plugins/webfontloader'
 // Import the functions you need from the SDKs you need
 
 
-
-
 loadFonts()
 
 createApp(App)
